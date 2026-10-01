@@ -1,3 +1,4 @@
+"""Formularios del sitio: registro, edición de perfil, inmuebles y filtro de la oferta."""
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -6,6 +7,7 @@ from django.db import transaction
 from .models import Perfil, Inmueble, Comuna, Region
 
 class RegistroForm(UserCreationForm):
+    """Registro de usuario. Crea el User y su Perfil en una misma transacción."""
     first_name = forms.CharField(label='Nombre', max_length=150)
     last_name = forms.CharField(label='Apellido', max_length=150)
     email = forms.EmailField(label='Correo electrónico')
@@ -18,6 +20,7 @@ class RegistroForm(UserCreationForm):
 
     @transaction.atomic
     def save(self, commit=True):
+        """Guarda el usuario y crea su Perfil; si falla el perfil, se revierte todo."""
         user = super().save(commit=commit)
         if commit:
             Perfil.objects.create(
@@ -28,6 +31,7 @@ class RegistroForm(UserCreationForm):
         return user
 
 class UsuarioForm(forms.ModelForm):
+    """Edición de nombre, apellido y correo del usuario."""
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
@@ -38,13 +42,17 @@ class UsuarioForm(forms.ModelForm):
         }
 
 class PerfilForm(forms.ModelForm):
+    """Edición de los datos del perfil (teléfono)."""
     class Meta:
         model = Perfil
         fields = ['telefono']
         labels = {'telefono': 'Teléfono'}
 
 class InmuebleForm(forms.ModelForm):
-    # propietario no va en el formulario: lo asigna la vista según el usuario logueado
+    """Alta y edición de inmuebles.
+
+    El propietario no va en el formulario: lo asigna la vista según el usuario logueado.
+    """
     class Meta:
         model = Inmueble
         fields = ['nombre', 'descripcion', 'direccion', 'comuna', 'tipo_inmueble',
@@ -65,12 +73,17 @@ class InmuebleForm(forms.ModelForm):
         self.fields['comuna'].queryset = Comuna.objects.order_by('nombre')
 
     def clean_precio_arriendo(self):
+        """Valida que el precio de arriendo sea mayor que cero."""
         precio = self.cleaned_data['precio_arriendo']
         if precio <= 0:
             raise forms.ValidationError('El precio debe ser mayor que cero.')
         return precio
 
 class FiltroInmueblesForm(forms.Form):
+    """Filtro de la oferta por región y comuna (se envía por GET).
+
+    Con una región elegida, el selector de comunas muestra solo las de esa región.
+    """
     region = forms.ModelChoiceField(
         label='Región', queryset=Region.objects.order_by('pk'),
         required=False, empty_label='Todas las regiones',
@@ -90,6 +103,7 @@ class FiltroInmueblesForm(forms.Form):
             self.fields['comuna'].queryset = Comuna.objects.filter(region_id=region_id).order_by('nombre')
 
     def filtrar(self, inmuebles):
+        """Devuelve el queryset filtrado por la región y/o comuna elegidas; un campo vacío no filtra."""
         region = self.cleaned_data.get('region')
         comuna = self.cleaned_data.get('comuna')
         if region:

@@ -1,3 +1,4 @@
+"""Vistas del sitio de arriendos: cuentas de usuario, oferta pública y gestión de inmuebles."""
 from functools import wraps
 
 from django.contrib import messages
@@ -21,12 +22,16 @@ def arrendador_requerido(vista):
     return envoltura
 
 def inmuebles_del_usuario(user):
-    # Propietario no está ligado a User: el puente es el correo
+    """Inmuebles cuyo propietario tiene el mismo correo que el usuario.
+
+    Propietario no está ligado a User: el puente es el correo. Sin correo, no hay inmuebles.
+    """
     if not user.email:
         return Inmueble.objects.none()
     return Inmueble.objects.filter(propietario__email=user.email)
 
 def registro(request):
+    """Crea una cuenta nueva (con su perfil) e inicia sesión."""
     if request.user.is_authenticated:
         return redirect('perfil')
 
@@ -44,6 +49,7 @@ def registro(request):
 
 @login_required
 def perfil(request):
+    """Muestra el perfil: los inmuebles propios si es arrendador, o la oferta disponible si es arrendatario."""
     # Usuarios creados antes de existir Perfil (fixtures, superusuario) no tienen uno
     perfil, _ = Perfil.objects.get_or_create(user=request.user)
 
@@ -57,6 +63,7 @@ def perfil(request):
 
 @login_required
 def editar_perfil(request):
+    """Permite actualizar los datos personales y el teléfono del usuario."""
     perfil, _ = Perfil.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
@@ -77,6 +84,7 @@ def editar_perfil(request):
     })
 
 def inmuebles_disponibles(request):
+    """Oferta pública de inmuebles disponibles, ordenada por precio y filtrable por región y comuna."""
     inmuebles = (Inmueble.objects
                  .filter(disponibilidad=True)
                  .select_related('comuna__region', 'tipo_inmueble')
@@ -91,6 +99,7 @@ def inmuebles_disponibles(request):
 
 @arrendador_requerido
 def mis_inmuebles(request):
+    """Dashboard del arrendador: lista de sus propios inmuebles."""
     inmuebles = (inmuebles_del_usuario(request.user)
                  .select_related('comuna', 'tipo_inmueble')
                  .order_by('nombre'))
@@ -98,6 +107,7 @@ def mis_inmuebles(request):
 
 @arrendador_requerido
 def crear_inmueble(request):
+    """Publica un inmueble; crea el Propietario a partir del usuario si aún no existe."""
     if not request.user.email:
         messages.error(request, 'Agrega un correo a tu perfil antes de publicar un inmueble.')
         return redirect('editar_perfil')
@@ -125,6 +135,7 @@ def crear_inmueble(request):
 
 @arrendador_requerido
 def editar_inmueble(request, pk):
+    """Edita un inmueble del usuario."""
     # Buscar dentro de los inmuebles del usuario: uno ajeno da 404, no se puede editar
     inmueble = get_object_or_404(inmuebles_del_usuario(request.user), pk=pk)
 
@@ -141,6 +152,7 @@ def editar_inmueble(request, pk):
 
 @arrendador_requerido
 def eliminar_inmueble(request, pk):
+    """Elimina un inmueble del usuario tras una confirmación por POST."""
     inmueble = get_object_or_404(inmuebles_del_usuario(request.user), pk=pk)
 
     if request.method == 'POST':
