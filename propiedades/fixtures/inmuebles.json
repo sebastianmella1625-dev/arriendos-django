@@ -1,0 +1,142 @@
+[
+  {
+    "model": "propiedades.inmueble",
+    "pk": 1,
+    "fields": {
+      "nombre": "Depto Providencia Centro",
+      "descripcion": "Departamento de 2 dormitorios cerca del metro, ideal para profesionales.",
+      "direccion": "Av. Providencia 1234",
+      "comuna": 316,
+      "tipo_inmueble": 2,
+      "propietario": 1,
+      "precio_arriendo": "550000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 2,
+    "fields": {
+      "nombre": "Depto Las Condes Vista Cordillera",
+      "descripcion": "Departamento amoblado con vista a la cordillera, 3 dormitorios.",
+      "direccion": "Av. Apoquindo 4500",
+      "comuna": 307,
+      "tipo_inmueble": 2,
+      "propietario": 1,
+      "precio_arriendo": "950000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 3,
+    "fields": {
+      "nombre": "Studio Ñuñoa Universitario",
+      "descripcion": "Studio pequeño cerca de universidades, ideal para estudiantes.",
+      "direccion": "Irarrázaval 2200",
+      "comuna": 313,
+      "tipo_inmueble": 2,
+      "propietario": 3,
+      "precio_arriendo": "380000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 4,
+    "fields": {
+      "nombre": "Casa Viña del Mar Cerca del Mar",
+      "descripcion": "Casa de 4 dormitorios a 5 cuadras de la playa.",
+      "direccion": "Av. San Martín 800",
+      "comuna": 51,
+      "tipo_inmueble": 1,
+      "propietario": 2,
+      "precio_arriendo": "780000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 5,
+    "fields": {
+      "nombre": "Oficina Valparaíso Centro",
+      "descripcion": "Oficina de 40m2 en el centro histórico de Valparaíso.",
+      "direccion": "Prat 350",
+      "comuna": 45,
+      "tipo_inmueble": 3,
+      "propietario": 2,
+      "precio_arriendo": "420000.00",
+      "disponibilidad": false
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 6,
+    "fields": {
+      "nombre": "Casa Concepción Familiar",
+      "descripcion": "Casa de 3 dormitorios con patio, sector residencial tranquilo.",
+      "direccion": "Los Carrera 1500",
+      "comuna": 167,
+      "tipo_inmueble": 1,
+      "propietario": 3,
+      "precio_arriendo": "600000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 7,
+    "fields": {
+      "nombre": "Depto La Serena Frente al Mar",
+      "descripcion": "Departamento con vista al mar, 2 dormitorios, edificio con piscina.",
+      "direccion": "Av. del Mar 2100",
+      "comuna": 30,
+      "tipo_inmueble": 2,
+      "propietario": 1,
+      "precio_arriendo": "700000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 8,
+    "fields": {
+      "nombre": "Local Comercial Temuco Centro",
+      "descripcion": "Local comercial de 60m2 en calle principal, alto flujo peatonal.",
+      "direccion": "Manuel Montt 900",
+      "comuna": 200,
+      "tipo_inmueble": 4,
+      "propietario": 2,
+      "precio_arriendo": "500000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 9,
+    "fields": {
+      "nombre": "Casa Puerto Montt Vista al Lago",
+      "descripcion": "Casa de 3 dormitorios con vista parcial al lago.",
+      "direccion": "Av. Diego Portales 3300",
+      "comuna": 244,
+      "tipo_inmueble": 1,
+      "propietario": 3,
+      "precio_arriendo": "650000.00",
+      "disponibilidad": true
+    }
+  },
+  {
+    "model": "propiedades.inmueble",
+    "pk": 10,
+    "fields": {
+      "nombre": "Depto Punta Arenas Céntrico",
+      "descripcion": "Departamento de 1 dormitorio, calefacción central, cerca del centro.",
+      "direccion": "Bories 700",
+      "comuna": 284,
+      "tipo_inmueble": 2,
+      "propietario": 1,
+      "precio_arriendo": "400000.00",
+      "disponibilidad": false
+    }
+  }
+]

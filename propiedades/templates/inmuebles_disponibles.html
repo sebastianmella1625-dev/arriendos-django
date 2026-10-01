@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Inmuebles disponibles{% endblock %}
+
+{% block content %}
+    <h1>Inmuebles disponibles para arrendar</h1>
+
+    <form method="get" class="filtro">
+        <div>
+            <label for="{{ filtro.region.id_for_label }}">{{ filtro.region.label }}</label>
+            {{ filtro.region }}
+        </div>
+        <div>
+            <label for="{{ filtro.comuna.id_for_label }}">{{ filtro.comuna.label }}</label>
+            {{ filtro.comuna }}
+        </div>
+        <div class="acciones">
+            <button type="submit">Filtrar</button>
+            <a href="{% url 'inmuebles_disponibles' %}">Limpiar</a>
+        </div>
+    </form>
+
+    <p>
+        {{ inmuebles|length }} inmueble{{ inmuebles|length|pluralize }} disponible{{ inmuebles|length|pluralize }}
+        {% if filtro.cleaned_data.comuna %}en {{ filtro.cleaned_data.comuna }}{% elif filtro.cleaned_data.region %}en {{ filtro.cleaned_data.region }}{% endif %}.
+    </p>
+
+    {% for inmueble in inmuebles %}
+        <article class="ficha">
+            <h2>{{ inmueble.nombre }}</h2>
+            <p class="detalle">
+                {{ inmueble.tipo_inmueble|default:"Sin tipo" }} ·
+                {{ inmueble.direccion }}, {{ inmueble.comuna|default:"sin comuna" }}{% if inmueble.comuna %} ({{ inmueble.comuna.region }}){% endif %}
+            </p>
+            <p>{{ inmueble.descripcion }}</p>
+            <p class="precio">${{ inmueble.precio_arriendo|floatformat:"0g" }} / mes</p>
+        </article>
+    {% empty %}
+        <p>No hay inmuebles disponibles con ese filtro. <a href="{% url 'inmuebles_disponibles' %}">Ver todos</a></p>
+    {% endfor %}
+{% endblock %}

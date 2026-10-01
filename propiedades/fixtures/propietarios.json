@@ -1,0 +1,32 @@
+[
+  {
+    "model": "propiedades.propietario",
+    "pk": 1,
+    "fields": {
+      "nombre": "María",
+      "apellido": "González",
+      "telefono": "+56911111111",
+      "email": "maria.gonzalez@example.com"
+    }
+  },
+  {
+    "model": "propiedades.propietario",
+    "pk": 2,
+    "fields": {
+      "nombre": "Roberto",
+      "apellido": "Pérez",
+      "telefono": "+56922222222",
+      "email": "roberto.perez@example.com"
+    }
+  },
+  {
+    "model": "propiedades.propietario",
+    "pk": 3,
+    "fields": {
+      "nombre": "Camila",
+      "apellido": "Soto",
+      "telefono": "+56933333333",
+      "email": "camila.soto@example.com"
+    }
+  }
+]

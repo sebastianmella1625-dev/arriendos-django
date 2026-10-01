@@ -1,0 +1,22 @@
+# Secretos y configuración local
+.env
+
+# Entornos virtuales
+Envs/
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+
+# Bases de datos locales
+db.sqlite3
+
+# Reportes generados por generar_reportes.py
+reporte_por_*.txt
+
+# Editor / sistema
+.vscode/
+.DS_Store

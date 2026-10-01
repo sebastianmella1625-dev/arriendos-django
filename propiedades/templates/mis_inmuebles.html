@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis inmuebles{% endblock %}
+
+{% block content %}
+    <h1>Mis inmuebles</h1>
+    <p><a class="boton" href="{% url 'crear_inmueble' %}">+ Publicar inmueble</a></p>
+
+    {% if inmuebles %}
+        <table class="lista">
+            <tr>
+                <th>Inmueble</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            {% for inmueble in inmuebles %}
+                <tr>
+                    <td>
+                        <strong>{{ inmueble.nombre }}</strong><br>
+                        {{ inmueble.tipo_inmueble|default:"" }} · {{ inmueble.comuna|default:"" }}
+                    </td>
+                    <td>${{ inmueble.precio_arriendo|floatformat:"0g" }}</td>
+                    <td>{{ inmueble.disponibilidad|yesno:"Disponible,Arrendado" }}</td>
+                    <td>
+                        <a href="{% url 'editar_inmueble' inmueble.pk %}">Editar</a> ·
+                        <a href="{% url 'eliminar_inmueble' inmueble.pk %}">Eliminar</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No tienes inmuebles registrados con tu correo ({{ user.email|default:"sin correo" }}).</p>
+    {% endif %}
+{% endblock %}

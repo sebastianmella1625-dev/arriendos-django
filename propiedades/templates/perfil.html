@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Mi perfil{% endblock %}
+
+{% block content %}
+    <h1>{{ user.get_full_name|default:user.username }}</h1>
+    <p><span class="etiqueta">{{ perfil.get_tipo_display }}</span></p>
+
+    <h2>Datos personales</h2>
+    <table>
+        <tr><th>Usuario</th><td>{{ user.username }}</td></tr>
+        <tr><th>Nombre</th><td>{{ user.first_name|default:"—" }}</td></tr>
+        <tr><th>Apellido</th><td>{{ user.last_name|default:"—" }}</td></tr>
+        <tr><th>Correo electrónico</th><td>{{ user.email|default:"—" }}</td></tr>
+        <tr><th>Teléfono</th><td>{{ perfil.telefono|default:"—" }}</td></tr>
+        <tr><th>Miembro desde</th><td>{{ user.date_joined|date:"d/m/Y" }}</td></tr>
+    </table>
+    <p><a href="{% url 'editar_perfil' %}">Editar mis datos</a></p>
+
+    {% if perfil.tipo == 'arrendador' %}
+        <h2>Mis inmuebles publicados</h2>
+        <p><a href="{% url 'mis_inmuebles' %}">Gestionar mis inmuebles</a> · <a href="{% url 'crear_inmueble' %}">Publicar uno nuevo</a></p>
+    {% else %}
+        <h2>Inmuebles disponibles para arrendar</h2>
+    {% endif %}
+
+    {% if inmuebles %}
+        <table>
+            {% for inmueble in inmuebles %}
+                <tr>
+                    <td>
+                        <strong>{{ inmueble.nombre }}</strong><br>
+                        {{ inmueble.tipo_inmueble|default:"" }} · {{ inmueble.comuna|default:"" }}
+                    </td>
+                    <td>${{ inmueble.precio_arriendo|floatformat:"0g" }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif perfil.tipo == 'arrendador' %}
+        <p>No tienes inmuebles registrados con tu correo ({{ user.email|default:"sin correo" }}).</p>
+    {% else %}
+        <p>No hay inmuebles disponibles en este momento.</p>
+    {% endif %}
+{% endblock %}

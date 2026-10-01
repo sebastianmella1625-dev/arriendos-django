@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Arriendos{% endblock %}</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 760px; margin: 0 auto; padding: 0 16px 40px; color: #222; }
+        nav { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid #ddd; margin-bottom: 24px; }
+        nav .marca { font-weight: bold; margin-right: auto; }
+        nav form { margin: 0; }
+        a { color: #1a5fb4; }
+        .mensaje { background: #e6f4ea; border: 1px solid #b7dfc3; padding: 10px 14px; border-radius: 6px; }
+        .etiqueta { display: inline-block; background: #1a5fb4; color: #fff; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; vertical-align: top; }
+        th { width: 35%; color: #555; }
+        .errorlist { color: #b00020; }
+        .helptext { display: block; color: #666; font-size: 0.85em; }
+        .mensaje.error { background: #fdecea; border-color: #f5c2c0; }
+        .ficha { border: 1px solid #ddd; border-radius: 8px; padding: 4px 16px; margin-bottom: 16px; }
+        .ficha h2 { margin-bottom: 4px; }
+        .ficha .detalle { color: #555; margin-top: 0; }
+        .ficha .precio { font-weight: bold; }
+        .boton { display: inline-block; background: #1a5fb4; color: #fff; padding: 6px 14px; border-radius: 6px; text-decoration: none; }
+        .peligro { background: #b00020; color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; }
+        form p label { display: block; font-weight: 600; }
+        form p label:has(+ input[type=checkbox]) { display: inline; }
+        .filtro { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; background: #f5f7fa; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+        .filtro label { display: block; font-weight: 600; font-size: 0.9em; }
+        .filtro > div { flex: 1 1 200px; }
+        .filtro .acciones { flex: 0 0 auto; display: flex; gap: 10px; align-items: center; }
+        textarea, select, input[type=text], input[type=number], input[type=email], input[type=password] { width: 100%; max-width: 420px; box-sizing: border-box; }
+        /* Celulares: la barra ocupa el ancho completo y cada fila de la tabla de gestión se apila como tarjeta */
+        @media (max-width: 600px) {
+            nav .marca { flex-basis: 100%; }
+            table.lista tr:first-child { display: none; }
+            table.lista tr { display: block; padding: 10px 0; border-bottom: 1px solid #eee; }
+            table.lista td { display: block; border: 0; padding: 2px 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <span class="marca">Arriendos</span>
+        <a href="{% url 'inmuebles_disponibles' %}">Inmuebles disponibles</a>
+        {% if user.is_authenticated %}
+            {% if user.perfil.tipo == 'arrendador' %}
+                <a href="{% url 'mis_inmuebles' %}">Mis inmuebles</a>
+            {% endif %}
+            <a href="{% url 'perfil' %}">Mi perfil</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Cerrar sesión</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+            <a href="{% url 'registro' %}">Crear cuenta</a>
+        {% endif %}
+    </nav>
+
+    {% for message in messages %}
+        <p class="mensaje {{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

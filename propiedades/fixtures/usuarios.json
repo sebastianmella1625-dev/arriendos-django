@@ -1,0 +1,44 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 10,
+    "fields": {
+      "username": "arrendatario1",
+      "first_name": "Fernanda",
+      "last_name": "Rojas",
+      "email": "fernanda.rojas@example.com",
+      "password": "!",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 11,
+    "fields": {
+      "username": "arrendatario2",
+      "first_name": "Cristóbal",
+      "last_name": "Muñoz",
+      "email": "cristobal.munoz@example.com",
+      "password": "!",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 12,
+    "fields": {
+      "username": "arrendatario3",
+      "first_name": "Valentina",
+      "last_name": "Silva",
+      "email": "valentina.silva@example.com",
+      "password": "!",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  }
+]
